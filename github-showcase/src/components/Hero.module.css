@@ -1,0 +1,74 @@
+.hero {
+  display: grid;
+  grid-template-columns: 1.8fr 1fr;
+  gap: 16px;
+  align-items: stretch;
+  margin-bottom: 28px;
+}
+
+.copy,
+.panel {
+  border: 1px solid #1f1f1f;
+  background: #111111;
+  border-radius: 6px;
+}
+
+.copy {
+  padding: 32px;
+}
+
+.kicker {
+  margin: 0 0 12px;
+  color: #ff2b2b;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2.2rem, 5vw, 4.5rem);
+  line-height: 1.02;
+  color: #ffffff;
+}
+
+.description {
+  max-width: 60ch;
+  color: #8a8a8a;
+  font-size: 1.02rem;
+  margin-top: 16px;
+  line-height: 1.6;
+}
+
+.panel {
+  padding: 20px;
+  display: grid;
+  gap: 12px;
+}
+
+.panel div {
+  padding: 14px 16px;
+  border-radius: 4px;
+  background: #0a0a0a;
+  border: 1px solid #1f1f1f;
+}
+
+.panel span {
+  display: block;
+  color: #6b6b6b;
+  font-size: 0.78rem;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.panel strong {
+  font-size: 1rem;
+  color: #e5e5e5;
+}
+
+@media (max-width: 860px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+}

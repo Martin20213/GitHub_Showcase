@@ -1,122 +1,79 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useMemo, useState } from 'react';
+import { useGithubRepos } from './hooks/useGithubRepos';
+import Hero from './components/Hero';
+import ProjectGrid from './components/ProjectGrid';
+import Footer from './components/Footer';
+import './styles/global.css';
 
-function App() {
-  const [count, setCount] = useState(0)
+const FILTERS = ['All', 'PHP', 'JavaScript', 'TypeScript', 'C#'] as const;
+
+export default function App() {
+  const { repos, loading, error, username } = useGithubRepos();
+  const [filter, setFilter] = useState<(typeof FILTERS)[number]>('All');
+
+  const { featured, all } = useMemo(() => {
+    const matchesFilter = (project: (typeof repos)[number]) => {
+      if (filter === 'All') return true;
+      return [project.language, ...project.stack].some(
+        (x) => x && x.toLowerCase() === filter.toLowerCase()
+      );
+    };
+
+    const visible = repos
+      .filter(matchesFilter)
+      .sort((a, b) => {
+        if (a.order !== b.order) return a.order - b.order;
+        return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
+      });
+
+    return {
+      featured: visible.filter((p) => p.featured),
+      all: visible
+    };
+  }, [repos, filter]);
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <main className="app-shell">
+      <div className="app-container">
+        <Hero />
 
-      <div className="ticks"></div>
+        <section className="toolbar">
+          <div>
+            <h2>Projects</h2>
+            <p>Browse featured work and the full repository list.</p>
+          </div>
+          <div className="filters" role="tablist" aria-label="Project filters">
+            {FILTERS.map((item) => (
+              <button
+                key={item}
+                className={item === filter ? 'filter active' : 'filter'}
+                onClick={() => setFilter(item)}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
+        </section>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+        {loading && (
+          <section className="skeleton-grid">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div className="skeleton-card" key={i} />
+            ))}
+          </section>
+        )}
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+        {error && <div className="error">GitHub data could not be loaded: {error}</div>}
+
+        {!loading && !error && (
+          <>
+            <ProjectGrid title="Featured Projects" projects={featured} />
+            <ProjectGrid title="All Projects" projects={all} />
+          </>
+        )}
+
+        <Footer username={username} />
+      </div>
+    </main>
+  );
 }
-
-export default App

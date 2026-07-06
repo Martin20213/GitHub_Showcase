@@ -1,0 +1,116 @@
+.card {
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #1f1f1f;
+  background: #111111;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  border-color: #404040;
+}
+
+.clickArea {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 22px;
+  color: inherit;
+  height: 100%;
+}
+
+.topRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: start;
+}
+
+h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  color: #ffffff;
+}
+
+.badge {
+  font-size: 0.7rem;
+  padding: 5px 10px;
+  border-radius: 4px;
+  background: rgba(255, 43, 43, 0.1);
+  color: #ff6b6b;
+  border: 1px solid rgba(255, 43, 43, 0.3);
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.description {
+  margin: 0;
+  color: #8a8a8a;
+  line-height: 1.6;
+  min-height: 3.2em;
+  font-size: 0.92rem;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag,
+.button,
+.buttonGhost {
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 0.8rem;
+}
+
+.tag {
+  background: #1a1a1a;
+  color: #a3a3a3;
+  border: 1px solid #262626;
+}
+
+.actions {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.meta {
+  color: #6b6b6b;
+  font-size: 0.78rem;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.button {
+  background: #ff2b2b;
+  color: #0a0a0a;
+  font-weight: 600;
+  border: 1px solid #ff2b2b;
+}
+
+.button:hover {
+  background: #ff4444;
+}
+
+.buttonGhost {
+  border: 1px solid #262626;
+  color: #a3a3a3;
+  background: #0a0a0a;
+}
+
+.buttonGhost:hover {
+  border-color: #404040;
+  color: #ffffff;
+}

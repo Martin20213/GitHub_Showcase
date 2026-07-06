@@ -1,0 +1,10 @@
+{
+  "sample-repo": {
+    "visible": true,
+    "title": "Sample Project",
+    "description": "Custom overridden description.",
+    "stack": ["React", "Laravel"],
+    "featured": true,
+    "order": 1
+  }
+}

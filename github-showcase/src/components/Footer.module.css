@@ -1,0 +1,56 @@
+.footer {
+  margin-top: 40px;
+  padding: 28px 0 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.inner {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.brand {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.text {
+  margin: 0;
+  color: rgba(233, 238, 255, 0.68);
+  max-width: 52ch;
+  line-height: 1.6;
+}
+
+.links {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.links a {
+  color: rgba(242, 245, 255, 0.82);
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 10px 14px;
+  border-radius: 999px;
+  transition: 0.18s ease;
+  font-size: 1.25rem;
+}
+
+.links a:hover {
+  background: rgba(255, 124, 124, 0.18);
+  border-color: rgba(255, 124, 124, 0.3);
+}
+
+.bottom {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  color: rgba(233, 238, 255, 0.5);
+  font-size: 0.85rem;
+}

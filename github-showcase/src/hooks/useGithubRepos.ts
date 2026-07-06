@@ -40,10 +40,46 @@ export type Project = {
 
 type LanguagesResponse = Record<string, number>;
 
+type CachePayload = {
+  timestamp: number;
+  data: Project[];
+};
+
 const projectsConfig = config as Record<string, ProjectOverride>;
 
 const USERNAME = import.meta.env.VITE_GITHUB_USERNAME || 'octocat';
 const TOKEN = import.meta.env.VITE_GITHUB_TOKEN;
+
+const CACHE_KEY = 'github-portfolio-cache';
+const CACHE_TTL = 60 * 60 * 1000;
+
+function getCachedRepos(): Project[] | null {
+  try {
+    const raw = localStorage.getItem(CACHE_KEY);
+    if (!raw) return null;
+
+    const parsed = JSON.parse(raw) as CachePayload;
+    if (!parsed.timestamp || !Array.isArray(parsed.data)) return null;
+
+    if (Date.now() - parsed.timestamp > CACHE_TTL) return null;
+
+    return parsed.data;
+  } catch {
+    return null;
+  }
+}
+
+function setCachedRepos(data: Project[]) {
+  try {
+    const payload: CachePayload = {
+      timestamp: Date.now(),
+      data
+    };
+    localStorage.setItem(CACHE_KEY, JSON.stringify(payload));
+  } catch {
+    // ignore storage errors
+  }
+}
 
 async function fetchJson<T>(url: string): Promise<T | null> {
   const res = await fetch(url, {
@@ -74,7 +110,6 @@ async function normalizeRepo(repo: GithubRepo): Promise<Project | null> {
   if (override.visible === false) return null;
 
   const owner = repo.owner?.login || USERNAME;
-
   const languages = override.stack?.length ? [] : await fetchLanguages(owner, repo.name);
 
   const stack =
@@ -112,6 +147,12 @@ export function useGithubRepos() {
         setLoading(true);
         setError('');
 
+        const cached = getCachedRepos();
+        if (cached) {
+          if (!cancelled) setRepos(cached);
+          return;
+        }
+
         const data = await fetchJson<GithubRepo[]>(
           `https://api.github.com/users/${USERNAME}/repos?per_page=100&sort=updated`
         );
@@ -123,6 +164,8 @@ export function useGithubRepos() {
         const visibleRepos = data.filter((repo) => !repo.fork);
         const normalized = await Promise.all(visibleRepos.map(normalizeRepo));
         const filtered = normalized.filter((repo): repo is Project => repo !== null);
+
+        setCachedRepos(filtered);
 
         if (!cancelled) setRepos(filtered);
       } catch (e) {
@@ -142,4 +185,4 @@ export function useGithubRepos() {
   }, []);
 
   return useMemo(() => ({ repos, loading, error, username: USERNAME }), [repos, loading, error]);
-};
+}

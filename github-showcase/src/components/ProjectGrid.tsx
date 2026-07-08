@@ -5,13 +5,14 @@ import type { Project } from '../hooks/useGithubRepos';
 type Props = {
   title: string;
   projects: Project[];
+  variant?: 'default' | 'recent';
 };
 
-export default function ProjectGrid({ title, projects }: Props) {
+export default function ProjectGrid({ title, projects, variant='default' }: Props) {
   if (!projects.length) return null;
 
   return (
-    <section className={styles.section}>
+    <section className={`project-grid ${variant === 'recent' ? 'project-grid--recent' : ''}`}>
       <h2>{title}</h2>
       <div className={styles.grid}>
         {projects.map((project) => (

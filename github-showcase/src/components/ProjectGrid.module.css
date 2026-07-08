@@ -15,3 +15,10 @@ h2 {
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 14px;
 }
+:global(.project-grid--recent) .grid > * {
+  border: 1px solid var(--color-red-accent, #ef444478);
+}
+
+:global(.project-grid--recent) .grid > *:hover {
+  border-color: var(--color-red-accent-bright, #f87171);
+}

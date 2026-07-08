@@ -11,7 +11,7 @@ export default function App() {
   const { repos, loading, error, username } = useGithubRepos();
   const [filter, setFilter] = useState<(typeof FILTERS)[number]>('All');
 
-  const { featured, all } = useMemo(() => {
+  const { featured, recent, all } = useMemo(() => {
     const matchesFilter = (project: (typeof repos)[number]) => {
       if (filter === 'All') return true;
       return [project.language, ...project.stack].some(
@@ -28,6 +28,7 @@ export default function App() {
 
     return {
       featured: visible.filter((p) => p.featured),
+      recent: visible.slice(0, 3),
       all: visible
     };
   }, [repos, filter]);
@@ -68,6 +69,7 @@ export default function App() {
         {!loading && !error && (
           <>
             <ProjectGrid title="Featured Projects" projects={featured} />
+            <ProjectGrid title="Recent Projects" projects={recent} variant="recent" />
             <ProjectGrid title="All Projects" projects={all} />
           </>
         )}

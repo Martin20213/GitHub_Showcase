@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { useGithubRepos } from './hooks/useGithubRepos';
 import Hero from './components/Hero';
 import ProjectGrid from './components/ProjectGrid';
+import AboutSection from './components/AboutSection';
 import Footer from './components/Footer';
 import './styles/global.css';
 
@@ -37,7 +38,7 @@ export default function App() {
     <main className="app-shell">
       <div className="app-container">
         <Hero />
-
+        <AboutSection />
         <section className="toolbar">
           <div>
             <h2>Projects</h2>

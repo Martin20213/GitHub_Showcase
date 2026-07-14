@@ -1,4 +1,5 @@
 import styles from './Hero.module.css';
+import profileImg from '../assets/profile.png';
 
 export default function Hero() {
   return (
@@ -8,14 +9,18 @@ export default function Hero() {
           Full Stack Developer • Laravel • React • AI Automation
         </p>
 
-        <h1>Hi, I'm Martin</h1>
+        <div className={styles.messageRow}>
+          <div className={styles.avatarFrame}>
+            <img src={profileImg} alt="Martin" className={styles.avatar} />
+          </div>
 
-        <p className={styles.description}>
-          Full Stack Developer passionate about building scalable web applications,
-          clean architectures and AI-powered solutions. I love working with Laravel,
-          React, TypeScript and modern development tools while continuously learning
-          new technologies.
-        </p>
+          <div className={styles.bubble}>
+            <h1>Hi, I'm Martin</h1>
+            <p className={styles.description}>
+              Full-Stack Developer passionate about building scalable web applications, clean architectures, and AI-powered solutions. I have production experience developing Laravel-based ERP systems, REST APIs, and AI integrations. I love working with Laravel, React, TypeScript, and modern development tools while continuously learning new technologies. I'm driven by solving real-world problems and building software that delivers long-term value.
+            </p>
+          </div>
+        </div>
       </div>
 
       <div className={styles.panel}>

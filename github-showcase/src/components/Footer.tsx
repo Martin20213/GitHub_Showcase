@@ -1,5 +1,6 @@
 import styles from "./Footer.module.css";
 import { FaGithub, FaLinkedin } from "react-icons/fa6";
+import { SiLeetcode } from "react-icons/si";
 
 type Props = {
   username: string;
@@ -31,6 +32,14 @@ export default function Footer({ username }: Props) {
             rel="noreferrer"
           >
             <FaLinkedin className={styles.icon} />
+          </a>
+
+          <a
+            href="https://leetcode.com/Martin20213/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <SiLeetcode className={styles.icon} />
           </a>
         </div>
       </div>

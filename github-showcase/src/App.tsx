@@ -5,6 +5,7 @@ import ProjectGrid from './components/ProjectGrid';
 import AboutSection from './components/AboutSection';
 import Footer from './components/Footer';
 import './styles/global.css';
+import SkillJumpGame from './components/SkillJumpGame';
 
 const FILTERS = ['All', 'PHP', 'JavaScript', 'TypeScript', 'C#'] as const;
 
@@ -68,12 +69,20 @@ export default function App() {
         {error && <div className="error">GitHub data could not be loaded: {error}</div>}
 
         {!loading && !error && (
-          <>
-            <ProjectGrid title="Featured Projects" projects={featured} />
-            <ProjectGrid title="Recent Projects" projects={recent} variant="recent" />
-            <ProjectGrid title="All Projects" projects={all} />
-          </>
-        )}
+        <>
+          <section className="projects-layout">
+            <div className="projects-content">
+              <ProjectGrid title="Featured Projects" projects={featured} />
+              <ProjectGrid title="Recent Projects" projects={recent} variant="recent" />
+              <ProjectGrid title="All Projects" projects={all} />
+            </div>
+          </section>
+
+          <aside className="skill-game">
+            <SkillJumpGame />
+          </aside>
+        </>
+      )}
 
         <Footer username={username} />
       </div>

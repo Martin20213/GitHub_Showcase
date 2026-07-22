@@ -137,4 +137,31 @@ button {
   .app-shell {
     padding: 16px;
   }
+    .skill-game {
+    display: none;
+  }
+
+  .projects-layout {
+    display: block;
+  }
+}
+
+.projects-layout {
+  width: 100%;
+}
+
+.projects-content {
+  width: 100%;
+}
+
+
+.skill-game {
+  position: fixed;
+  right: 30px;
+  top: 10px;
+
+  width: 120px;
+  height: 600px;
+
+  z-index: 10;
 }

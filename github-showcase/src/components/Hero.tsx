@@ -26,7 +26,7 @@ export default function Hero() {
       <div className={styles.panel}>
         <div>
           <span>Backend</span>
-          <strong>Laravel · PHP · MySQL</strong>
+          <strong>Laravel · PHP · MySQL · C#</strong>
         </div>
 
         <div>
